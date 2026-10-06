@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # fe_mobile
 
 A new Flutter project.
