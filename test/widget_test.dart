@@ -1,30 +1,32 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:fe_mobile/main.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
+  testWidgets('homepage displays both favorite sections', (tester) async {
+    await tester.pumpWidget(const InvoksApp());
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    expect(find.text('Top 3 Ruangan Favorit'), findsOneWidget);
+    expect(find.text('Top 3 Barang Favorit'), findsOneWidget);
+  });
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
+  testWidgets('sidebar opens and closes from outside tap', (tester) async {
+    await tester.pumpWidget(const InvoksApp());
+
+    await tester.tap(find.byTooltip('Buka menu'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Keranjang barang'), findsOneWidget);
+
+    await tester.tapAt(const Offset(700, 400));
+    await tester.pumpAndSettle();
+
+    await tester.tapAt(const Offset(780, 30));
     await tester.pump();
 
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    expect(
+      find.text('Halaman pencarian akan segera hadir.'),
+      findsOneWidget,
+    );
   });
 }
