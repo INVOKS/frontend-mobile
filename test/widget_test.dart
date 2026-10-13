@@ -1,17 +1,13 @@
+import 'package:flutter_test/flutter_test.dart';
 
+import 'package:fe_mobile/main.dart';
 
 void main() {
-<<<<<<< Updated upstream
-  testWidgets('homepage shows both favorite sections', (tester) async {
-=======
   testWidgets('homepage displays both favorite sections', (tester) async {
->>>>>>> Stashed changes
     await tester.pumpWidget(const InvoksApp());
 
     expect(find.text('Top 3 Ruangan Favorit'), findsOneWidget);
     expect(find.text('Top 3 Barang Favorit'), findsOneWidget);
-<<<<<<< Updated upstream
-=======
   });
 
   testWidgets('sidebar opens and closes from outside tap', (tester) async {
@@ -28,7 +24,9 @@ void main() {
     await tester.tapAt(const Offset(780, 30));
     await tester.pump();
 
-    expect(find.text('Halaman pencarian akan segera hadir.'), findsOneWidget);
->>>>>>> Stashed changes
+    expect(
+      find.text('Halaman pencarian akan segera hadir.'),
+      findsOneWidget,
+    );
   });
 }
