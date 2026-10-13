@@ -1,5 +1,3 @@
-import 'dart:math' as math;
-
 import 'package:flutter/material.dart';
 
 import '../controller/sidebar_controller.dart';
@@ -20,42 +18,40 @@ class SidebarOverlay extends StatelessWidget {
     return AnimatedBuilder(
       animation: controller,
       builder: (context, child) {
-        final screenWidth = MediaQuery.sizeOf(context).width;
-        final sidebarWidth = math.min(
-          360.0,
-          screenWidth * 0.61,
-        );
-
+        final sidebarWidth = InvoksSidebar.calculateWidth(context);
         final isOpen = controller.isOpen;
 
-        return Stack(
-          children: [
-            // Background gelap ketika sidebar terbuka
-            if (isOpen)
-              Positioned.fill(
-                child: GestureDetector(
-                  behavior: HitTestBehavior.opaque,
-                  onTap: controller.closeSidebar,
-                  child: ColoredBox(
-                    color: Colors.black.withValues(alpha: 0.12),
+        return IgnorePointer(
+          ignoring: !isOpen,
+          child: Stack(
+            children: [
+              // Background gelap ketika sidebar terbuka
+              if (isOpen)
+                Positioned.fill(
+                  child: GestureDetector(
+                    behavior: HitTestBehavior.opaque,
+                    onTap: controller.closeSidebar,
+                    child: ColoredBox(
+                      color: Colors.black.withValues(alpha: 0.12),
+                    ),
                   ),
                 ),
-              ),
 
-            // Sidebar
-            AnimatedPositioned(
-              duration: const Duration(milliseconds: 250),
-              curve: Curves.easeOutCubic,
-              left: isOpen ? 0 : -sidebarWidth,
-              top: 0,
-              bottom: 0,
-              width: sidebarWidth,
-              child: InvoksSidebar(
-                controller: controller,
-                onMenuSelected: onMenuSelected,
+              // Sidebar
+              AnimatedPositioned(
+                duration: const Duration(milliseconds: 250),
+                curve: Curves.easeOutCubic,
+                left: isOpen ? 0 : -sidebarWidth,
+                top: 0,
+                bottom: 0,
+                width: sidebarWidth,
+                child: InvoksSidebar(
+                  controller: controller,
+                  onMenuSelected: onMenuSelected,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         );
       },
     );

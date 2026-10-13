@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'core/theme/app_theme.dart';
+import 'screens/booking_history/booking_history_screen.dart';
 import 'screens/home/home_screen.dart';
 
 void main() {
@@ -30,6 +31,10 @@ class InvoksApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: AppTheme.light,
       home: const HomeScreen(),
+      routes: {
+        '/home': (context) => const HomeScreen(),
+        '/booking-history': (context) => const BookingHistoryScreen(),
+      },
     );
   }
 }
