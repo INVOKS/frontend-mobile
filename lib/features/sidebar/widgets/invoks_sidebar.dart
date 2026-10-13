@@ -11,7 +11,7 @@ const _sidebarMenus = <SidebarMenu>[
   SidebarMenu(title: 'Ruangan', icon: Icons.apartment_rounded),
   SidebarMenu(title: 'Barang', icon: Icons.inventory_2_rounded),
   SidebarMenu(title: 'Notifikasi', icon: Icons.notifications_rounded),
-  SidebarMenu(title: 'Riwayat', icon: Icons.calendar_month_rounded),
+  SidebarMenu(title: 'Riwayat', icon: Icons.calendar_month_rounded, route: '/booking-history'),
   SidebarMenu(title: 'Keranjang barang', icon: Icons.shopping_bag_rounded),
   SidebarMenu(title: 'Masuk', icon: Icons.account_circle_rounded),
 ];
@@ -26,21 +26,29 @@ class InvoksSidebar extends StatelessWidget {
   final SidebarController controller;
   final ValueChanged<int> onMenuSelected;
 
+  static double calculateWidth(BuildContext context) {
+    final screenWidth = MediaQuery.sizeOf(context).width;
+    return math.min(280.0, screenWidth * 0.59);
+  }
+
   @override
   Widget build(BuildContext context) {
-    final screenWidth = MediaQuery.sizeOf(context).width;
-    final sidebarWidth = math.min(360.0, screenWidth * 0.61);
+    final sidebarWidth = calculateWidth(context);
 
-    return SafeArea(
-      top: false,
-      child: Material(
-        color: SidebarColors.background,
-        elevation: 12,
+    return Material(
+      color: SidebarColors.background,
+      elevation: 8,
+      child: SafeArea(
+        top: false,
         child: SizedBox(
           width: sidebarWidth,
-          height: double.infinity,
           child: ListView.builder(
-            padding: const EdgeInsets.only(top: 22, bottom: 18),
+            padding: const EdgeInsets.only(
+              left: 15,
+              right: 15,
+              top: 12,
+              bottom: 16,
+            ),
             itemCount: _sidebarMenus.length,
             itemBuilder: (context, index) {
               return SidebarMenuItem(

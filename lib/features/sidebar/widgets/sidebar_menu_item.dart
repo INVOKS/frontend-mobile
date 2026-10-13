@@ -28,35 +28,37 @@ class SidebarMenuItem extends StatelessWidget {
       button: true,
       selected: isActive,
       label: menu.title,
-      child: InkWell(
-        onTap: onTap,
-        borderRadius: BorderRadius.circular(11),
-        child: AnimatedContainer(
-          duration: const Duration(milliseconds: 180),
-          margin: const EdgeInsets.symmetric(horizontal: 15, vertical: 3),
-          padding: const EdgeInsets.symmetric(horizontal: 12),
-          height: 48,
-          decoration: BoxDecoration(
-            color: isActive ? SidebarColors.activeItem : Colors.transparent,
-            borderRadius: BorderRadius.circular(11),
-          ),
-          child: Row(
-            children: [
-              Icon(menu.icon, size: 24, color: SidebarColors.icon),
-              const SizedBox(width: 14),
-              Expanded(
-                child: Text(
-                  menu.title,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
-                    color: SidebarColors.text,
-                    fontSize: 18,
-                    fontWeight: FontWeight.w600,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 2.5),
+        child: InkWell(
+          onTap: onTap,
+          borderRadius: BorderRadius.circular(10),
+          child: AnimatedContainer(
+            duration: const Duration(milliseconds: 180),
+            padding: const EdgeInsets.symmetric(horizontal: 12),
+            height: 46,
+            decoration: BoxDecoration(
+              color: isActive ? SidebarColors.activeItem : Colors.transparent,
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Row(
+              children: [
+                Icon(menu.icon, size: 24, color: SidebarColors.icon),
+                const SizedBox(width: 12),
+                Expanded(
+                  child: Text(
+                    menu.title,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                      color: SidebarColors.text,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
