@@ -13,7 +13,7 @@ const _sidebarMenus = <SidebarMenu>[
   SidebarMenu(title: 'Notifikasi', icon: Icons.notifications_rounded),
   SidebarMenu(title: 'Riwayat', icon: Icons.calendar_month_rounded, route: '/booking-history'),
   SidebarMenu(title: 'Keranjang barang', icon: Icons.shopping_bag_rounded),
-  SidebarMenu(title: 'Masuk', icon: Icons.account_circle_rounded),
+  SidebarMenu(title: 'Profil', icon: Icons.account_circle_rounded),
 ];
 
 class InvoksSidebar extends StatelessWidget {

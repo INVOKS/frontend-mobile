@@ -5,6 +5,8 @@ import 'auth/screens/login_screen.dart';
 import 'core/theme/app_theme.dart';
 import 'screens/booking_history/booking_history_screen.dart';
 import 'screens/home/home_screen.dart';
+import 'screens/profile/profile_screen.dart';
+import 'screens/rooms/rooms_screen.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,11 +21,13 @@ void main() {
     ),
   );
 
-  runApp(const InvoksApp());
+  runApp(const InvoksApp(home: LoginScreen()));
 }
 
 class InvoksApp extends StatelessWidget {
-  const InvoksApp({super.key});
+  const InvoksApp({super.key, this.home = const HomeScreen()});
+
+  final Widget home;
 
   @override
   Widget build(BuildContext context) {
@@ -31,12 +35,15 @@ class InvoksApp extends StatelessWidget {
       title: 'INVOKS',
       debugShowCheckedModeBanner: false,
       theme: AppTheme.light,
-      home: const LoginScreen(),
+      home: home,
       routes: {
         '/login': (context) => const LoginScreen(),
         '/home': (context) => const HomeScreen(),
         '/booking-history': (context) => const BookingHistoryScreen(),
+        '/rooms': (context) => const RoomsScreen(),
+        '/profile': (context) => const ProfileScreen(),
       },
     );
   }
 }
+

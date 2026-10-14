@@ -42,7 +42,11 @@ class LoginScreen extends StatelessWidget {
                     alignment: Alignment.centerLeft,
                     child: IconButton(
                       icon: const Icon(Icons.arrow_back, color: Colors.white),
-                      onPressed: () {},
+                      onPressed: () {
+                        if (Navigator.canPop(context)) {
+                          Navigator.pop(context);
+                        }
+                      },
                     ),
                   ),
                 ),
@@ -61,6 +65,9 @@ class LoginScreen extends StatelessWidget {
                             builder: (_) => const RegisterScreen(),
                           ),
                         );
+                      },
+                      onLoginSuccess: () {
+                        Navigator.pushReplacementNamed(context, '/home');
                       },
                     ),
                   ),

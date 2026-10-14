@@ -5,6 +5,8 @@ import '../../data/booking_history_dummy.dart';
 import '../../features/sidebar/sidebar.dart';
 import '../../models/booking_history.dart';
 import '../home/widgets/home_app_bar.dart';
+import '../profile/profile_screen.dart';
+import '../rooms/rooms_screen.dart';
 import 'widgets/booking_card.dart';
 import 'widgets/booking_filter_dropdown.dart';
 import 'widgets/booking_tab_bar.dart';
@@ -53,6 +55,24 @@ class _BookingHistoryScreenState extends State<BookingHistoryScreen> {
       } else {
         Navigator.of(context).pushReplacementNamed('/home');
       }
+      return;
+    }
+    if (index == 1) {
+      // Pindah ke Ruangan
+      Navigator.of(context)
+          .push(MaterialPageRoute<void>(builder: (_) => const RoomsScreen()))
+          .then((_) {
+            if (mounted) _sidebarController.selectMenu(4);
+          });
+      return;
+    }
+    if (index == 6) {
+      // Pindah ke Profil
+      Navigator.of(context)
+          .push(MaterialPageRoute<void>(builder: (_) => const ProfileScreen()))
+          .then((_) {
+            if (mounted) _sidebarController.selectMenu(4);
+          });
       return;
     }
     ScaffoldMessenger.of(context).showSnackBar(

@@ -3,8 +3,9 @@ import '../../constants/app_colors.dart';
 
 class LoginForm extends StatefulWidget {
   final VoidCallback? onRegisterTap;
+  final VoidCallback? onLoginSuccess;
 
-  const LoginForm({super.key, this.onRegisterTap});
+  const LoginForm({super.key, this.onRegisterTap, this.onLoginSuccess});
 
   @override
   State<LoginForm> createState() => _LoginFormState();
@@ -21,6 +22,38 @@ class _LoginFormState extends State<LoginForm> {
     _emailController.dispose();
     _passwordController.dispose();
     super.dispose();
+  }
+
+  void _handleLogin() {
+    final email = _emailController.text.trim();
+    final password = _passwordController.text;
+
+    if (email.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Silakan masukkan email atau nama pengguna.'),
+          duration: Duration(seconds: 2),
+        ),
+      );
+      return;
+    }
+
+    if (password.isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text('Silakan masukkan kata sandi.'),
+          duration: Duration(seconds: 2),
+        ),
+      );
+      return;
+    }
+
+    // Navigasi ke halaman beranda
+    if (widget.onLoginSuccess != null) {
+      widget.onLoginSuccess!();
+    } else {
+      Navigator.pushReplacementNamed(context, '/home');
+    }
   }
 
   OutlineInputBorder get _border => OutlineInputBorder(
@@ -41,6 +74,7 @@ class _LoginFormState extends State<LoginForm> {
           TextField(
             controller: _emailController,
             keyboardType: TextInputType.emailAddress,
+            textInputAction: TextInputAction.next,
             decoration: InputDecoration(
               hintText: 'Masukkan Email',
               hintStyle: const TextStyle(color: AppColors.hint),
@@ -53,6 +87,8 @@ class _LoginFormState extends State<LoginForm> {
           TextField(
             controller: _passwordController,
             obscureText: _obscure,
+            textInputAction: TextInputAction.done,
+            onSubmitted: (_) => _handleLogin(),
             decoration: InputDecoration(
               hintText: 'Masukkan Kata Sandi',
               hintStyle: const TextStyle(color: AppColors.hint),
@@ -79,7 +115,14 @@ class _LoginFormState extends State<LoginForm> {
               const Text('Ingat saya', style: TextStyle(fontSize: 13)),
               const Spacer(),
               TextButton(
-                onPressed: () {}, // TODO: halaman lupa kata sandi
+                onPressed: () {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text('Fitur lupa kata sandi akan segera hadir.'),
+                      duration: Duration(seconds: 2),
+                    ),
+                  );
+                },
                 style: TextButton.styleFrom(
                   padding: EdgeInsets.zero,
                   minimumSize: const Size(0, 0),
@@ -101,7 +144,7 @@ class _LoginFormState extends State<LoginForm> {
             width: 140,
             height: 44,
             child: ElevatedButton(
-              onPressed: () {}, // TODO: proses login
+              onPressed: _handleLogin,
               style: ElevatedButton.styleFrom(
                 backgroundColor: AppColors.primary,
                 foregroundColor: Colors.white,

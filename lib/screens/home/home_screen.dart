@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import '../../core/theme/app_colors.dart';
 import '../../data/dummy_data.dart';
 import '../../features/sidebar/sidebar.dart';
+import '../profile/profile_screen.dart';
+import '../rooms/rooms_screen.dart';
 import 'widgets/favorite_item_card.dart';
 import 'widgets/favorite_room_card.dart';
 import 'widgets/hero_banner.dart';
@@ -43,8 +45,28 @@ class _HomeScreenState extends State<HomeScreen> {
       // Sudah di Beranda
       return;
     }
+    if (index == 1) {
+      // Pindah ke Ruangan
+      Navigator.of(context)
+          .push(MaterialPageRoute<void>(builder: (_) => const RoomsScreen()))
+          .then((_) {
+            if (mounted) _sidebarController.selectMenu(0);
+          });
+      return;
+    }
     if (index == 4) {
-      Navigator.of(context).pushNamed('/booking-history');
+      Navigator.of(context).pushNamed('/booking-history').then((_) {
+        if (mounted) _sidebarController.selectMenu(0);
+      });
+      return;
+    }
+    if (index == 6) {
+      // Pindah ke Profil
+      Navigator.of(context)
+          .push(MaterialPageRoute<void>(builder: (_) => const ProfileScreen()))
+          .then((_) {
+            if (mounted) _sidebarController.selectMenu(0);
+          });
       return;
     }
     ScaffoldMessenger.of(context).showSnackBar(
@@ -75,9 +97,19 @@ class _HomeScreenState extends State<HomeScreen> {
                     padding: EdgeInsets.only(
                       bottom: index == topFavoriteRooms.length - 1 ? 0 : 16,
                     ),
-                    child: FavoriteRoomCard(
-                      room: topFavoriteRooms[index],
-                      rank: index + 1,
+                    child: InkWell(
+                      borderRadius: BorderRadius.circular(12),
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute<void>(
+                            builder: (_) => const RoomsScreen(),
+                          ),
+                        );
+                      },
+                      child: FavoriteRoomCard(
+                        room: topFavoriteRooms[index],
+                        rank: index + 1,
+                      ),
                     ),
                   ),
                 ),
