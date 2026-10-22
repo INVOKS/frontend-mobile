@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 
+import '../../auth/auth_service.dart';
+import '../../auth/screens/login_screen.dart';
+
 import '../../core/constants/app_assets.dart';
 import '../../core/theme/app_colors.dart';
 import '../../data/dummy_data.dart';
@@ -106,11 +109,15 @@ class _ProfileScreenState extends State<ProfileScreen> {
             child: const Text('Batal'),
           ),
           TextButton(
-            onPressed: () {
+            onPressed: () async {
               Navigator.of(ctx).pop();
-              // TODO: hapus sesi autentikasi dan arahkan ke layar login
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Berhasil keluar akun.')),
+              await AuthService.instance.logout();
+              if (!mounted) return;
+              Navigator.of(context).pushAndRemoveUntil(
+                MaterialPageRoute<void>(
+                  builder: (_) => const LoginScreen(),
+                ),
+                (route) => false,
               );
             },
             child: const Text(

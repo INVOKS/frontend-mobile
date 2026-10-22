@@ -1,14 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+import 'auth/auth_service.dart';
 import 'auth/screens/login_screen.dart';
 import 'core/theme/app_theme.dart';
+import 'data/dummy_data.dart';
 import 'screens/booking_history/booking_history_screen.dart';
 import 'screens/home/home_screen.dart';
 import 'screens/profile/profile_screen.dart';
 import 'screens/rooms/rooms_screen.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   SystemChrome.setSystemUIOverlayStyle(
@@ -21,7 +23,20 @@ void main() {
     ),
   );
 
-  runApp(const InvoksApp(home: LoginScreen()));
+  // Cek apakah sesi login masih tersimpan
+  final loggedIn = await AuthService.instance.isLoggedIn();
+
+  Widget homeScreen = const LoginScreen();
+  if (loggedIn) {
+    // Muat ulang profil dari cache lokal
+    final storedUser = await AuthService.instance.getStoredUser();
+    if (storedUser != null) {
+      userProfileNotifier.value = storedUser.toUserProfile();
+    }
+    homeScreen = const HomeScreen();
+  }
+
+  runApp(InvoksApp(home: homeScreen));
 }
 
 class InvoksApp extends StatelessWidget {
@@ -46,4 +61,3 @@ class InvoksApp extends StatelessWidget {
     );
   }
 }
-
